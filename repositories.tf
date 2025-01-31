@@ -11,3 +11,16 @@ resource "github_repository" "docs" {
   auto_init  = true
 }
 
+resource "github_issue_labels" "issues" {
+  repository = "issues"
+
+  dynamic "label" {
+    for_each = local.common_labels
+    content {
+      name        = label.value.name
+      color       = label.value.color
+      description = label.value.description
+    }
+  }
+}
+
