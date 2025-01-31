@@ -1,14 +1,7 @@
-# Create infrastructure repository
 resource "github_repository" "issues" {
   name        = "issues"
   description = "Issues related to AI in a Box project"
   has_issues  = true
-}
-
-resource "github_repository" "docs" {
-  name       = "docs"
-  has_issues = true
-  auto_init  = true
 }
 
 resource "github_issue_labels" "issues" {
@@ -24,3 +17,19 @@ resource "github_issue_labels" "issues" {
   }
 }
 
+resource "github_repository" "docs" {
+  name       = "docs"
+  has_issues = true
+  auto_init  = true
+}
+
+resource "github_branch_protection" "docs" {
+  repository_id = "docs"
+
+  pattern                 = "main"
+  required_linear_history = true
+
+  required_pull_request_reviews {
+    required_approving_review_count = 1
+  }
+}
