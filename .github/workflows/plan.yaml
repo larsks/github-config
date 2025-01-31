@@ -7,10 +7,12 @@ on:
         required: true
       AWS_SECRET_ACCESS_KEY:
         required: true
-      CONFIG_APP_ID:
-        required: true
       CONFIG_APP_SECRET:
         required: true
+    inputs:
+      CONFIG_APP_ID:
+        type: string
+        default: "${{ vars.CONFIG_APP_ID }}"
 
     outputs:
       tf.plan:
@@ -34,7 +36,7 @@ jobs:
         id: generate-token
         uses: actions/create-github-app-token@v1
         with:
-          app-id: ${{ secrets.CONFIG_APP_ID }}
+          app-id: ${{ inputs.CONFIG_APP_ID || vars.CONFIG_APP_ID }}
           private-key: ${{ secrets.CONFIG_APP_SECRET }}
           owner: ${{ github.repository_owner }}
 
