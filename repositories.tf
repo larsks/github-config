@@ -8,5 +8,6 @@ resource "github_repository" "issues" {
 resource "github_repository" "docs" {
   name       = "docs"
   has_issues = true
+  auto_init  = true
 }
 
