@@ -49,3 +49,14 @@ resource "github_branch_protection" "docs" {
     required_approving_review_count = 1
   }
 }
+
+resource "github_repository" "dotgithub" {
+  name         = ".github"
+  visibility   = "public"
+  description  = "Profile README for innabox organization"
+  has_issues   = false
+  has_projects = false
+  has_wiki     = false
+  auto_init    = true
+}
+
