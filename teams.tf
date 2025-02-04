@@ -16,3 +16,24 @@ resource "github_team_membership" "members" {
   username = each.value.username
   role     = each.value.role
 }
+
+## This creates an "all-members" team containing all organization members. I thought it might
+## be useful for repository permissions, but I'm not sure. Leaving it here for now as an example.
+##
+#resource "github_team" "all-members" {
+#  name        = "all-members"
+#  description = "All organization members"
+#  privacy     = "closed"
+#
+#}
+#
+#resource "github_team_membership" "all-members" {
+#  for_each = {
+#    for member in csvdecode(file("members.csv")) :
+#    member.username => member
+#  }
+#
+#  team_id  = "all-members"
+#  role     = "member"
+#  username = each.value.username
+#}
