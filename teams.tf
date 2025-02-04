@@ -34,6 +34,6 @@ resource "github_team_membership" "all-members" {
   }
 
   team_id  = "all-members"
-  role     = "member"
+  role     = each.value.role == "admin" ? "maintainer" : "member"
   username = each.value.username
 }
