@@ -29,3 +29,10 @@ module "repo_hypershift_demo" {
   name        = "hypershift-demo"
   description = "Scripts used for the hypershift demo"
 }
+
+module "repo_dotgithub_private" {
+  source      = "./modules/common_repository"
+  name        = ".github-private"
+  description = "Member-only README for innabox organization"
+}
+
