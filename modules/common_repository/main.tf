@@ -1,12 +1,3 @@
-terraform {
-  required_providers {
-    github = {
-      source  = "integrations/github"
-      version = "~> 6.0"
-    }
-  }
-}
-
 resource "github_repository" "repo" {
   name          = var.name
   visibility    = var.visibility
