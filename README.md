@@ -53,9 +53,9 @@ You should ensure that you run `tofu fmt` before submitting a pull request. The 
 cat > .git/hooks/pre-commit <<EOF
 #!/bin/sh
 
-if ! tofu fmt -check; then
+if ! tofu fmt -recursive -check; then
   echo "ERROR: tofu fmt failed" >&2
-  tofu fmt -diff
+  tofu fmt -recursive -diff
   exit 1
 fi
 EOF
