@@ -7,6 +7,18 @@ variable "description" {
   default = ""
 }
 
+variable "required_approvals" {
+  type        = number
+  default     = 1
+  description = "Number of approvals required before merging a pull request"
+}
+
+variable "required_status_checks" {
+  type        = list(string)
+  default     = []
+  description = "A list of status checks that must pass before a PR can merge"
+}
+
 variable "visibility" {
   type    = string
   default = "public"

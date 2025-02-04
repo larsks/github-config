@@ -46,7 +46,12 @@ resource "github_branch_protection" "repo_protection" {
   ]
 
   required_pull_request_reviews {
-    required_approving_review_count = 1
+    required_approving_review_count = var.required_approvals
+  }
+
+  required_status_checks {
+    strict   = true
+    contexts = var.required_status_checks
   }
 
   depends_on = [github_repository.repo, github_repository_collaborators.repo_collaborators]
