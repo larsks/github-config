@@ -12,16 +12,16 @@ variable "visibility" {
   default = "public"
 }
 
+variable "branch_protection" {
+  type    = bool
+  default = true
+}
+
 variable "labels" {
   type = list(object({
     name        = string
     color       = string
     description = string
   }))
-  default = []
-}
-
-variable "branch_protection" {
-  type    = bool
-  default = true
+  default = null
 }

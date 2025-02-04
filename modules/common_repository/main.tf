@@ -22,7 +22,7 @@ resource "github_issue_labels" "repo_labels" {
   repository = var.name
 
   dynamic "label" {
-    for_each = var.labels
+    for_each = local.labels
     content {
       name        = label.value.name
       color       = label.value.color
