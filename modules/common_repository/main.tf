@@ -62,6 +62,12 @@ resource "github_repository_collaborators" "repo_collaborators" {
     permission = "push"
   }
 
+  # Always allow organization members to triage issues
+  team {
+    team_id    = "all-members"
+    permission = "triage"
+  }
+
   # Generate team blocks from the value of the "teams" input variable.
   dynamic "team" {
     for_each = {
