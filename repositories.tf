@@ -32,6 +32,7 @@ module "repo_hypershift_demo" {
 
 module "repo_dotgithub_private" {
   source      = "./modules/common_repository"
+  visibility  = "private"
   name        = ".github-private"
   description = "Member-only README for innabox organization"
 }
