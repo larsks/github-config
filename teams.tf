@@ -1,3 +1,4 @@
+# Create teams from the contents of "teams.csv"
 resource "github_team" "all" {
   for_each = {
     for team in csvdecode(file("teams.csv")) :
@@ -9,6 +10,7 @@ resource "github_team" "all" {
   privacy     = each.value.privacy
 }
 
+# Populate team members based on the csv files in the team-members directory.
 resource "github_team_membership" "members" {
   for_each = { for tm in local.team_members : tm.name => tm }
 

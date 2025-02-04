@@ -1,4 +1,5 @@
-# Create local values to retrieve items from CSVs
+# Populate variables with contents from local .csv files.
+
 locals {
   # Parse team member files
   team_members_path = "team-members"
@@ -6,6 +7,7 @@ locals {
     for file in fileset(local.team_members_path, "*.csv") :
     trimsuffix(file, ".csv") => csvdecode(file("${local.team_members_path}/${file}"))
   }
+
   # Create temp object that has team ID and CSV contents
   team_members_temp = flatten([
     for team, members in local.team_members_files : [
@@ -27,11 +29,4 @@ locals {
       }
     ]
   ])
-
-  # Parse repo team membership files
-  repo_teams_path = "repos-team"
-  repo_teams_files = {
-    for file in fileset(local.repo_teams_path, "*.csv") :
-    trimsuffix(file, ".csv") => csvdecode(file("${local.repo_teams_path}/${file}"))
-  }
 }

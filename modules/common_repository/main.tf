@@ -12,6 +12,8 @@ resource "github_repository" "repo" {
 resource "github_issue_labels" "repo_labels" {
   repository = var.name
 
+  # Generate label blocks from the value of local.values, which by default is initialized
+  # by the contents of the "labels.csv" file.
   dynamic "label" {
     for_each = local.labels
     content {
@@ -53,11 +55,14 @@ resource "github_branch_protection" "repo_protection" {
 resource "github_repository_collaborators" "repo_collaborators" {
   repository = var.name
 
+  # Always grant org-admins push (write) access to repository. This is necessary to support the
+  # force_push_bypassers configuration (above).
   team {
     team_id    = "org-admins"
     permission = "push"
   }
 
+  # Generate team blocks from the value of the "teams" input variable.
   dynamic "team" {
     for_each = {
       for team in var.teams :
@@ -69,6 +74,7 @@ resource "github_repository_collaborators" "repo_collaborators" {
     }
   }
 
+  # Generate user blocks from the value of the "users" input variable.
   dynamic "user" {
     for_each = {
       for user in var.users :

@@ -1,3 +1,4 @@
+# Define where terraform will store the shared state.
 terraform {
   backend "s3" {
     endpoints = {
