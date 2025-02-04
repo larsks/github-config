@@ -67,6 +67,28 @@ resource "github_repository_collaborators" "repo_collaborators" {
     permission = "push"
   }
 
+  dynamic "team" {
+    for_each = {
+      for team in var.teams :
+      team.team_id => team
+    }
+    content {
+      team_id    = team.value.team_id
+      permission = team.value.permission
+    }
+  }
+
+  dynamic "user" {
+    for_each = {
+      for user in var.users :
+      user.username => user
+    }
+    content {
+      username   = user.value.username
+      permission = user.value.permission
+    }
+  }
+
   depends_on = [github_repository.repo]
 }
 
