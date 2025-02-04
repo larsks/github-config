@@ -29,7 +29,7 @@ resource "github_issue_labels" "repo_labels" {
 resource "github_branch_protection" "repo_protection" {
   # This odd looking construct lets us control the creation of the
   # branch protection resource with a boolean variable.
-  count = var.branch_protection ? 1 : 0
+  count = var.visibility == "private" ? 0 : var.branch_protection ? 1 : 0
 
   repository_id = var.name
   pattern       = "main"

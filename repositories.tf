@@ -1,9 +1,8 @@
 module "repo_issues" {
-  source            = "./modules/common_repository"
-  name              = "issues"
-  visibility        = "private"
-  description       = "Issues related to AI in a Box project"
-  branch_protection = false
+  source      = "./modules/common_repository"
+  name        = "issues"
+  visibility  = "private"
+  description = "Issues related to AI in a Box project"
 }
 
 module "repo_docs" {
@@ -31,10 +30,9 @@ module "repo_hypershift_demo" {
 }
 
 module "repo_dotgithub_private" {
-  source            = "./modules/common_repository"
-  visibility        = "private"
-  name              = ".github-private"
-  description       = "Member-only README for innabox organization"
-  branch_protection = false
+  source      = "./modules/common_repository"
+  visibility  = "private"
+  name        = ".github-private"
+  description = "Member-only README for innabox organization"
 }
 
