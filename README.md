@@ -8,6 +8,43 @@ This repository contains Terraform/[OpenTofu] plan to manage the [innabox] GitHu
 
 When a commit is pushed to the `main` branch (e.g., when a pull request merges), that triggers the `.github/workflows/apply.yaml` workflow. This workflow acquires necessary credentials from GithHub secrets and from the "Org Config Management" GitHub app, and then uses [OpenTofu] to apply the requested configuration.
 
+## How do I...?
+
+### Add a new organization member
+
+1. Open `members.csv`
+1. Add a new row of the form `<username>,<role>`, where `<role>` in almost all cases should be `member`.
+
+### Add a new team
+
+1. Open `teams.csv`
+1. Add a new row of the form `<team_name>,<description>,<privacy>`, where `<privacy>` can be either `closed` (visible to all members of the organization) or `secret` (visible to organization owners and members of this team)
+
+### Add a new repository
+
+1. Open `repositories.tf`
+1. Add a new block of the form:
+
+    ```
+    module "repo_<repository_name_slug>" {
+      source      = "./modules/common_repository"
+      name        = "<repository_name>"
+      description = "<repository_description"
+    }
+    ```
+
+Where `<repository_name_slug>` is `<repository_name>` transformed to be a valid variable name in most common languages: a single word consisting of only alphanumerics and underscores. So e.g. `github-config` would become `github_config`, and `.gitjub` would become something like `dotgithub` (`_github` would also work).
+
+This will create a new repository with the following configuration:
+
+- A repository with issues enabled and wikis and projects disabled
+- Branch protection rules for the `main` branch requiring at least 1 approval for pull requests and restricting force pushes to members of the `org-admins` team
+- A standard set of labels
+
+See the [README file for the common_repository module][common_repository] for more information about customizing repository configuration (including how to make a repository private and how to add collaborators).
+
+[common_repository]: ./modules/common_repository/
+
 ## Suggested local pre-commit checks
 
 You should ensure that you run `tofu fmt` before submitting a pull request. The following will configure an appropriate `pre-commit` hook:
@@ -34,9 +71,9 @@ In general, you won't need to do this: the configuration is applied when a pull 
 
 1. Ensure that you have either Terraform or OpenTofu installed. There are packages for both available on Fedora:
 
-```
-dnf install opentofu
-```
+    ```
+    dnf install opentofu
+    ```
 
 1. Acquire S3 credentials.
 
