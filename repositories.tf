@@ -1,62 +1,22 @@
-resource "github_repository" "issues" {
-  name        = "issues"
-  visibility  = "private"
-  description = "Issues related to AI in a Box project"
-  has_issues  = true
+module "repo_issues" {
+  source            = "./modules/common_repository"
+  name              = "issues"
+  visibility        = "private"
+  description       = "Issues related to AI in a Box project"
+  labels            = local.common_labels
+  branch_protection = false
 }
 
-resource "github_issue_labels" "issues" {
-  repository = "issues"
-
-  dynamic "label" {
-    for_each = local.common_labels
-    content {
-      name        = label.value.name
-      color       = label.value.color
-      description = label.value.description
-    }
-  }
-}
-
-resource "github_repository" "docs" {
+module "repo_docs" {
+  source      = "./modules/common_repository"
   name        = "docs"
-  visibility  = "public"
   description = "General documentation for the AI in a Box project"
-  has_issues  = true
-  auto_init   = true
+  labels      = local.common_labels
 }
 
-resource "github_issue_labels" "docs" {
-  repository = "docs"
-
-  dynamic "label" {
-    for_each = local.common_labels
-    content {
-      name        = label.value.name
-      color       = label.value.color
-      description = label.value.description
-    }
-  }
+module "repo_dotgithub" {
+  source      = "./modules/common_repository"
+  name        = ".github"
+  description = "Profile README for innabox organization"
+  labels      = local.common_labels
 }
-
-resource "github_branch_protection" "docs" {
-  repository_id = "docs"
-
-  pattern                 = "main"
-  required_linear_history = true
-
-  required_pull_request_reviews {
-    required_approving_review_count = 1
-  }
-}
-
-resource "github_repository" "dotgithub" {
-  name         = ".github"
-  visibility   = "public"
-  description  = "Profile README for innabox organization"
-  has_issues   = false
-  has_projects = false
-  has_wiki     = false
-  auto_init    = true
-}
-
