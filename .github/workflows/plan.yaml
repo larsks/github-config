@@ -49,7 +49,7 @@ jobs:
 
       - run: tofu fmt -recursive -check
 
-      - run: tofu plan -no-color -out tf.plan
+      - run: tofu plan -concise -no-color -out tf.plan
         env:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
 
