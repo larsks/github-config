@@ -71,3 +71,15 @@ variable "users" {
     ])
   }
 }
+
+variable "is_template" {
+  description = "Set this to true if this is a template repository"
+  type        = bool
+  default     = false
+}
+
+variable "use_public_template" {
+  description = "Use the public_template repository as the template for a new repository"
+  type        = bool
+  default     = true
+}

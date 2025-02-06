@@ -7,6 +7,18 @@ resource "github_repository" "repo" {
   has_downloads = false
   has_projects  = false
   has_wiki      = false
+  is_template   = var.is_template
+
+  dynamic "template" {
+    # Use the public_template repository as a template unless the repository is
+    # private or is a template
+    for_each = var.visibility == "private" ? [] : var.is_template ? [] : var.use_public_template ? [0] : []
+
+    content {
+      owner      = "innabox"
+      repository = "public_template"
+    }
+  }
 }
 
 resource "github_issue_label" "repo_labels" {
@@ -99,4 +111,3 @@ resource "github_repository_collaborators" "repo_collaborators" {
 
   depends_on = [github_repository.repo]
 }
-

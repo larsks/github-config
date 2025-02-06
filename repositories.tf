@@ -12,15 +12,17 @@ module "repo_docs" {
 }
 
 module "repo_dotgithub" {
-  source      = "./modules/common_repository"
-  name        = ".github"
-  description = "Profile README for innabox organization"
+  source              = "./modules/common_repository"
+  name                = ".github"
+  description         = "Profile README for innabox organization"
+  use_public_template = false
 }
 
 module "repo_github_config" {
-  source      = "./modules/common_repository"
-  name        = "github-config"
-  description = "Repository for managing innabox github organization"
+  source              = "./modules/common_repository"
+  name                = "github-config"
+  description         = "Repository for managing innabox github organization"
+  use_public_template = false
   required_status_checks = [
     "pre-commit", "plan"
   ]
@@ -39,3 +41,11 @@ module "repo_dotgithub_private" {
   description = "Member-only README for innabox organization"
 }
 
+module "repo_public_template" {
+  source              = "./modules/common_repository"
+  visibility          = "public"
+  name                = "public_template"
+  description         = "Use this repository as the template for public-facing repositories"
+  use_public_template = false
+  is_template         = true
+}
