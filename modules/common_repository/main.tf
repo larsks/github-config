@@ -9,19 +9,19 @@ resource "github_repository" "repo" {
   has_wiki      = false
 }
 
-resource "github_issue_labels" "repo_labels" {
+resource "github_issue_label" "repo_labels" {
   repository = var.name
 
   # Generate label blocks from the value of local.values, which by default is initialized
   # by the contents of the "labels.csv" file.
-  dynamic "label" {
-    for_each = local.labels
-    content {
-      name        = label.value.name
-      color       = label.value.color
-      description = label.value.description
-    }
+  for_each = {
+    for label in local.labels :
+    label.name => label
   }
+
+  name        = each.value.name
+  color       = each.value.color
+  description = each.value.description
 
   depends_on = [github_repository.repo]
 }
