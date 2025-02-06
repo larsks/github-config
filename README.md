@@ -47,23 +47,7 @@ See the [README file for the common_repository module][common_repository] for mo
 
 ## Suggested local pre-commit checks
 
-You should ensure that you run `tofu fmt` before submitting a pull request. The following will configure an appropriate `pre-commit` hook:
-
-```
-cat > .git/hooks/pre-commit <<EOF
-#!/bin/sh
-
-if ! tofu fmt -recursive -check; then
-  echo "ERROR: tofu fmt failed" >&2
-  tofu fmt -recursive -diff
-  exit 1
-fi
-EOF
-
-chmod a+x .git/hooks/pre-commit
-```
-
-If there are formatting changes, this will abort the commit and apply the necessary changes to your files. You can then add the modified files and update the commit.
+You should ensure that you run `tofu fmt` before submitting a pull request. The easiest way of doing this is by installing the `pre-commit` tool on your local system and then running `pre-commit install`. This will configure `.git/hooks/prec-commit` to run the `pre-commit` tool whenever you create a new commit. If there are formatting changes, this will abort the commit and apply the necessary changes to your files. You can then add the modified files and update the commit.
 
 ## Prerequisites for applying the configuration
 

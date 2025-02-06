@@ -22,7 +22,7 @@ module "repo_github_config" {
   name        = "github-config"
   description = "Repository for managing innabox github organization"
   required_status_checks = [
-    "plan"
+    "pre-commit", "plan"
   ]
 }
 
