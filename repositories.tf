@@ -24,7 +24,7 @@ module "repo_github_config" {
   description         = "Repository for managing innabox github organization"
   use_public_template = false
   required_status_checks = [
-    "pre-commit", "plan"
+    "pre-commit",
   ]
 }
 

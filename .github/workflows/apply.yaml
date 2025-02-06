@@ -5,26 +5,26 @@ on:
   schedule:
   - cron: "17 */4 * * *"
   push:
+    paths:
+      - "**/*.tf"
+      - "**/*.csv"
     branches:
       - main
 
 jobs:
-  plan:
-    uses: ./.github/workflows/plan.yaml
-    secrets:
-      AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
-      AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
-      CONFIG_APP_SECRET: "${{ secrets.CONFIG_APP_SECRET }}"
-    with:
-      CONFIG_APP_ID: "${{ vars.CONFIG_APP_ID }}"
-
   apply:
-    needs: plan
     runs-on: ubuntu-latest
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     steps:
+      - uses: opentofu/setup-opentofu@v1
+
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - run: tofu init
+
       - name: Generate a token
         id: generate-token
         uses: actions/create-github-app-token@v1
@@ -33,17 +33,6 @@ jobs:
           private-key: ${{ secrets.CONFIG_APP_SECRET }}
           owner: ${{ github.repository_owner }}
 
-      - uses: opentofu/setup-opentofu@v1
-
-      - name: Check out code
-        uses: actions/checkout@v4
-
-      - uses: actions/download-artifact@v4
-        with:
-          name: tf.plan
-
-      - run: tofu init
-
-      - run: tofu apply -concise -auto-approve tf.plan
+      - run: tofu apply -concise -auto-approve
         env:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
