@@ -1,4 +1,6 @@
-This repository contains Terraform/[OpenTofu] plan to manage the [innabox] GitHub organization.
+# Innabox Github configuration
+
+This repository contains [OpenTofu] plan to manage the [innabox] GitHub organization.
 
 
 [innabox]: https://github.com/innabox
@@ -33,7 +35,7 @@ When a commit is pushed to the `main` branch (e.g., when a pull request merges),
     }
     ```
 
-Where `<repository_name_slug>` is `<repository_name>` transformed to be a valid variable name in most common languages: a single word consisting of only alphanumerics and underscores. So e.g. `github-config` would become `github_config`, and `.gitjub` would become something like `dotgithub` (`_github` would also work).
+Where `<repository_name_slug>` is `<repository_name>` transformed to be a valid identifier in most common languages: a single word consisting of only alphanumerics and underscores. So e.g. `github-config` would become `github_config`, and `.gitjub` would become something like `dotgithub` (`_github` would also work).
 
 This will create a new repository with the following configuration:
 
@@ -47,7 +49,7 @@ See the [README file for the common_repository module][common_repository] for mo
 
 ## Suggested local pre-commit checks
 
-You should ensure that you run `tofu fmt` before submitting a pull request. The easiest way of doing this is by installing the `pre-commit` tool on your local system and then running `pre-commit install`. This will configure `.git/hooks/prec-commit` to run the `pre-commit` tool whenever you create a new commit. If there are formatting changes, this will abort the commit and apply the necessary changes to your files. You can then add the modified files and update the commit.
+You should ensure that you run `tofu fmt` before submitting a pull request. The easiest way of doing this is by installing the `pre-commit` tool on your local system and then running `pre-commit install`. This will configure `.git/hooks/pre-commit` to run the `pre-commit` tool whenever you create a new commit. If there are formatting changes, this will abort the commit and apply the necessary changes to your files. You can then add the modified files and update the commit.
 
 ## Prerequisites for applying the configuration
 
