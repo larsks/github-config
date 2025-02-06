@@ -6,9 +6,10 @@ module "repo_issues" {
 }
 
 module "repo_docs" {
-  source      = "./modules/common_repository"
-  name        = "docs"
-  description = "General documentation for the AI in a Box project"
+  source              = "./modules/common_repository"
+  name                = "docs"
+  description         = "General documentation for the AI in a Box project"
+  use_public_template = false
 }
 
 module "repo_dotgithub" {
@@ -29,9 +30,10 @@ module "repo_github_config" {
 }
 
 module "repo_hypershift_demo" {
-  source      = "./modules/common_repository"
-  name        = "hypershift-demo"
-  description = "Scripts used for the hypershift demo"
+  source              = "./modules/common_repository"
+  name                = "hypershift-demo"
+  description         = "Scripts used for the hypershift demo"
+  use_public_template = false
 }
 
 module "repo_dotgithub_private" {
