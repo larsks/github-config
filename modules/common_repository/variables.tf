@@ -1,27 +1,30 @@
 variable "name" {
-  type = string
+  description = "The name of the repository"
+  type        = string
 }
 
 variable "description" {
-  type    = string
-  default = ""
+  description = "Repository description"
+  type        = string
+  default     = ""
 }
 
 variable "required_approvals" {
+  description = "Number of approvals required before merging a pull request"
   type        = number
   default     = 1
-  description = "Number of approvals required before merging a pull request"
 }
 
 variable "required_status_checks" {
+  description = "A list of status checks that must pass before a PR can merge"
   type        = list(string)
   default     = []
-  description = "A list of status checks that must pass before a PR can merge"
 }
 
 variable "visibility" {
-  type    = string
-  default = "public"
+  description = "Repository visibility (public or private)"
+  type        = string
+  default     = "public"
   validation {
     error_message = "unknown visiblity: must be public or private"
     condition     = contains(["public", "private"], var.visibility)
@@ -29,11 +32,13 @@ variable "visibility" {
 }
 
 variable "branch_protection" {
-  type    = bool
-  default = true
+  description = "Configure branch protection if true"
+  type        = bool
+  default     = true
 }
 
 variable "labels" {
+  description = "List of labels to configure on the repository"
   type = list(object({
     name        = string
     color       = string

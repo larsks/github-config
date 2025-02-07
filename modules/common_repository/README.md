@@ -1,18 +1,6 @@
 # Innabox common repository configuration
 
-## Variables
-
-- `name` -- the name of the repository
-
-- `visibility` -- [optional] either `public` or `private`
-
-- `branch_protection` -- [optional] `true` (the default) to configure the default branch protection, `false` if you do not want branch protection configured.
-
-- `labels` -- [optional] Issue label definitions for this repository if you do not want the standard set. This is a list of objects with `name`, `color`, and `description` attributes.
-
-- `teams` -- [optional] A list of teams with access to the repository. The value is a list of objects with `team_id` and `permission` attributes.
-
-- `users` -- [optional] A list of users with access to the repository. The value is a list of objects with `team_id` and `permission` attributes.
+Create a repository with managed labels, permissions, and branch protection rules.
 
 ## Examples
 
@@ -41,3 +29,40 @@ module "repo_docs" {
   ]
 }
 ```
+## Requirements
+
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.9.0 |
+| <a name="requirement_github"></a> [github](#requirement\_github) | ~> 6.0 |
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| <a name="provider_github"></a> [github](#provider\_github) | ~> 6.0 |
+
+## Resources
+
+| Name | Type |
+|------|------|
+| [github_branch_protection.repo_protection](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/branch_protection) | resource |
+| [github_issue_label.repo_labels](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/issue_label) | resource |
+| [github_repository.repo](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/repository) | resource |
+| [github_repository_collaborators.repo_collaborators](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/repository_collaborators) | resource |
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_branch_protection"></a> [branch\_protection](#input\_branch\_protection) | Configure branch protection if true | `bool` | `true` | no |
+| <a name="input_description"></a> [description](#input\_description) | Repository description | `string` | `""` | no |
+| <a name="input_is_template"></a> [is\_template](#input\_is\_template) | Set this to true if this is a template repository | `bool` | `false` | no |
+| <a name="input_labels"></a> [labels](#input\_labels) | List of labels to configure on the repository | <pre>list(object({<br/>    name        = string<br/>    color       = string<br/>    description = string<br/>  }))</pre> | `null` | no |
+| <a name="input_name"></a> [name](#input\_name) | The name of the repository | `string` | n/a | yes |
+| <a name="input_required_approvals"></a> [required\_approvals](#input\_required\_approvals) | Number of approvals required before merging a pull request | `number` | `1` | no |
+| <a name="input_required_status_checks"></a> [required\_status\_checks](#input\_required\_status\_checks) | A list of status checks that must pass before a PR can merge | `list(string)` | `[]` | no |
+| <a name="input_teams"></a> [teams](#input\_teams) | Teams with access to this repository | <pre>list(object({<br/>    team_id    = string<br/>    permission = string<br/>  }))</pre> | `[]` | no |
+| <a name="input_use_public_template"></a> [use\_public\_template](#input\_use\_public\_template) | Use the public\_template repository as the template for a new repository | `bool` | `true` | no |
+| <a name="input_users"></a> [users](#input\_users) | Users with access to this repository | <pre>list(object({<br/>    username   = string<br/>    permission = string<br/>  }))</pre> | `[]` | no |
+| <a name="input_visibility"></a> [visibility](#input\_visibility) | Repository visibility (public or private) | `string` | `"public"` | no |

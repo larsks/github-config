@@ -1,0 +1,31 @@
+# Innabox common repository configuration
+
+Create a repository with managed labels, permissions, and branch protection rules.
+
+## Examples
+
+### A very typical repository
+
+```
+module "repo_docs" {
+  source      = "./modules/common_repository"
+  name        = "docs"
+  description = "General documentation for the AI in a Box project"
+}
+```
+
+### A repository with a team collaborator
+
+```
+module "repo_docs" {
+  source      = "./modules/common_repository"
+  name        = "docs"
+  description = "General documentation for the AI in a Box project"
+  teams = [
+    {
+      team_id = "docs-workers"
+      permission = "push"
+    }
+  ]
+}
+```
