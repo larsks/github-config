@@ -1,13 +1,14 @@
 resource "github_repository" "repo" {
-  name          = var.name
-  visibility    = var.visibility
-  description   = var.description
-  auto_init     = true
-  has_issues    = true
-  has_downloads = false
-  has_projects  = false
-  has_wiki      = false
-  is_template   = var.is_template
+  name             = var.name
+  visibility       = var.visibility
+  description      = var.description
+  auto_init        = true
+  allow_auto_merge = true
+  has_issues       = true
+  has_downloads    = false
+  has_projects     = false
+  has_wiki         = false
+  is_template      = var.is_template
 
   dynamic "template" {
     # Use the public_template repository as a template unless the repository is
