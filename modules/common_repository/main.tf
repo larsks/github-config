@@ -3,7 +3,7 @@ resource "github_repository" "repo" {
   visibility       = var.visibility
   description      = var.description
   auto_init        = true
-  allow_auto_merge = true
+  allow_auto_merge = var.visibility == "private" ? false : true
   has_issues       = true
   has_downloads    = false
   has_projects     = false
