@@ -32,6 +32,6 @@ jobs:
         private-key: ${{ secrets.CONFIG_APP_SECRET }}
         owner: ${{ github.repository_owner }}
 
-    - run: tofu apply -concise -auto-approve
-      env:
+    - env:
         GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
+      run: bash ci/tofu-apply.sh
