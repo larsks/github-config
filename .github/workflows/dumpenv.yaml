@@ -1,0 +1,12 @@
+name: dumpenv
+
+on:
+  workflow_dispatch:
+  push:
+
+jobs:
+  pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+    - run: |
+        env | grep GITHUB
